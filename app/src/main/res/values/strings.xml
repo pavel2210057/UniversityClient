@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Мой МГТУ</string>
+
+    <!-- fragment_auth.xml -->
+    <string name="authScreen_title">Вход</string>
+    <string name="authScreen_loginField_placeholder">Имя пользователя</string>
+    <string name="authScreen_passwordField_placeholder">Пароль</string>
+    <string name="authScreen_submit_button">Войти</string>
+    <string name="authScreen_invalidData_error_title">Что-то пошло не так</string>
+    <string name="authScreen_invalidData_error_desc">Неверно введен логин или пароль</string>
+
+    <!-- fragment_hub.xml -->
+    <string name="hubScreen_tab_home">Хаб</string>
+    <string name="hubScreen_tab_chat">Чат</string>
+    <string name="hubScreen_tab_profile">Профиль</string>
+</resources>

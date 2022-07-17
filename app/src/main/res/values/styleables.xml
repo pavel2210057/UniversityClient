@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextInputView">
+        <attr name="hintText" format="string" />
+
+        <!--  attrs of <InputEditText />, so IDE could hint it while editing <TextInputView /> -->
+        <attr name="fontFamily" />
+        <attr name="fontWeight" />
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="textAllCaps" />
+        <attr name="android:textAppearance" />
+        <attr name="android:maxLines" />
+        <attr name="android:inputType" />
+    </declare-styleable>
+
+    <declare-styleable name="TabView">
+        <attr name="android:icon" />
+    </declare-styleable>
+
+    <declare-styleable name="StateButton">
+        <attr name="initialState" format="enum">
+            <enum name="Enabled" value="0" />
+            <enum name="Disabled" value="1" />
+            <enum name="Loading" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

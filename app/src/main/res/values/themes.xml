@@ -1,0 +1,18 @@
+<resources>
+    <style name="Theme.UniversityClient.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorAccent">@color/accentColor</item>
+
+        <item name="tabColor">@color/tabColor</item>
+        <item name="inactiveTabColor">@color/inactiveTabColor</item>
+        <item name="activeTabColor">@color/activeTabColor</item>
+
+        <item name="screenBackground">@color/screenBackground</item>
+        <item name="shimmerColor">@color/shimmerColor</item>
+        <item name="shimmerEdgeColor">@color/shimmerEdgeColor</item>
+
+        <item name="alertColor">@color/alertColor</item>
+        <item name="alertTextColor">@color/alertTextColor</item>
+    </style>
+</resources>

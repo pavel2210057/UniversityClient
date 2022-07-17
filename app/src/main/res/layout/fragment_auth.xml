@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?screenBackground">
+
+    <View
+        android:id="@+id/view_top_block"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textAppearance="@style/Text.Roboto.Medium"
+        android:id="@+id/textView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/authScreen_title"
+        android:textSize="26sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/view_top_block"
+        app:layout_constraintBottom_toBottomOf="@id/view_top_block"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_profile_active"
+        android:layout_marginStart="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textInputView_login"
+        app:layout_constraintBottom_toBottomOf="@id/textInputView_login"
+        />
+
+    <com.universityclient.app.presentation.common.view.TextInputView
+        android:textAppearance="@style/Text.Roboto"
+        style="@style/TextInputView"
+        android:id="@+id/textInputView_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="52dp"
+        app:hintText="@string/authScreen_loginField_placeholder"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:inputType="textNoSuggestions"
+        app:layout_constraintStart_toEndOf="@id/imageView_login"
+        app:layout_constraintTop_toBottomOf="@id/view_top_block"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_locker"
+        app:layout_constraintStart_toStartOf="@id/imageView_login"
+        app:layout_constraintTop_toTopOf="@id/textInputView_password"
+        app:layout_constraintEnd_toEndOf="@id/imageView_login"
+        app:layout_constraintBottom_toBottomOf="@id/textInputView_password"
+        />
+
+    <com.universityclient.app.presentation.common.view.TextInputView
+        style="@style/TextInputView"
+        android:id="@+id/textInputView_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:hintText="@string/authScreen_passwordField_placeholder"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@id/textInputView_login"
+        app:layout_constraintTop_toBottomOf="@id/textInputView_login"
+        app:layout_constraintEnd_toEndOf="@id/textInputView_login"
+        />
+    
+    <com.universityclient.app.presentation.common.view.StateButton
+        style="@style/Button.Primary"
+        android:id="@+id/button_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="69dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/authScreen_submit_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputView_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

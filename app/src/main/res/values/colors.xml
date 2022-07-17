@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#323C8D</color>
+    <color name="secondaryColor">#65161B42</color>
+    <color name="accentColor">#323C8D</color>
+    <color name="black">#FF000000</color>
+    <color name="black_transparent_60">#99000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="tabColor">@color/tab_color</color>
+    <color name="activeTabColor">?attr/colorPrimary</color>
+    <color name="inactiveTabColor">#65000000</color>
+
+    <color name="screenBackground">@color/white</color>
+
+    <color name="shimmerColor">#9AFFFFFF</color>
+    <color name="shimmerEdgeColor">@color/white</color>
+
+    <color name="alertColor">#CDB70C0C</color>
+    <color name="alertTextColor">#C1C1C1</color>
+</resources>

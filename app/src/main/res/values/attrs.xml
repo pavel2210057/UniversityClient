@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="tabColor" format="color" />
+    <attr name="inactiveTabColor" format="color" />
+    <attr name="activeTabColor" format="color" />
+
+    <attr name="screenBackground" format="color|reference" />
+
+    <attr name="shimmerColor" format="color" />
+    <attr name="shimmerEdgeColor" format="color" />
+
+    <attr name="alertColor" format="color" />
+    <attr name="alertTextColor" format="color" />
+</resources>

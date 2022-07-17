@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text" />
+
+    <style name="Text.Roboto">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="fontStyle">normal</item>
+    </style>
+
+    <style name="Text.Roboto.Normal">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Text.Roboto.Medium">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextInputView" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:textAppearance">@style/Text.Roboto</item>
+    </style>
+
+    <style name="Button" />
+
+    <style name="Button.Primary" parent="Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/Text.Roboto.Medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+
+        <item name="android:stateListAnimator">@null</item>
+
+        <item name="android:backgroundTint">@color/primary_button</item>
+        <item name="android:backgroundTintMode">src_over</item>
+
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+    
+    <style name="Tab" />
+    
+    <style name="Tab.Hub">
+        <item name="android:textAppearance">@style/Text.Roboto.Normal</item>
+
+        <item name="android:minWidth">56dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center</item>
+
+        <item name="android:textColor">?attr/tabColor</item>
+        <item name="android:textSize">13sp</item>
+
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>

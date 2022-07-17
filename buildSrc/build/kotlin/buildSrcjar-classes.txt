@@ -1,0 +1,1 @@
+C:\Users\Pavel\Desktop\a\UniversityClient\buildSrc\build\classes\kotlin\main\BuildExtKt$findLineStartsWith$1.class;C:\Users\Pavel\Desktop\a\UniversityClient\buildSrc\build\classes\kotlin\main\BuildExtKt$localProperties$1.class;C:\Users\Pavel\Desktop\a\UniversityClient\buildSrc\build\classes\kotlin\main\BuildExtKt.class
