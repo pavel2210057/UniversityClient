@@ -22,16 +22,22 @@ class SnackBarBehavior<B : ViewBinding>(
     private var hideAfterDelayRunnable: Runnable? = null
     private var sh = StateHolder(State.Hidden)
 
+    private val hiddenPosition: Float
+        get() = -snackBarView.height.toFloat()
+
+    private val shownPosition: Float
+        get() = 0f
+
     fun setup() {
         snackBarView.doOnLayout {
-            resetSnackBarPosition()
+            resetSnackBar()
             setupSwipeDismissBehavior()
         }
     }
 
     fun show(action: (B) -> Unit) {
         if (!snackBarView.isLaidOut) {
-            snackBarView.doOnLayout { show(action) }
+            snackBarView.doOnLayout { showInternal(action) }
             return
         }
 
@@ -52,18 +58,17 @@ class SnackBarBehavior<B : ViewBinding>(
 
     private fun setupSwipeDismissBehavior() {
         snackBarView.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-
-            behavior = object : SwipeDismissBehavior<View>() {
-                override fun canSwipeDismissView(view: View): Boolean {
-                    return view === snackBarView
-                }
-            }.apply {
+            behavior = SwipeDismissBehavior<View>().apply {
                 listener = object : SwipeDismissBehavior.OnDismissListener {
 
                     override fun onDragStateChanged(state: Int) {}
 
                     override fun onDismiss(view: View) {
-                        view.alpha = 1f
+                        snackBarView.apply {
+                            alpha = 1f
+                            resetSnackBar()
+                            requestLayout()
+                        }
                     }
                 }
             }
@@ -72,10 +77,11 @@ class SnackBarBehavior<B : ViewBinding>(
 
     private fun showInternal(action: (B) -> Unit) {
         action(snackBarBinding)
+
         snackBarView.doOnLayout {
             val animator = animate(
-                from = -snackBarView.height.toFloat(),
-                to = 0f
+                from = hiddenPosition,
+                to = shownPosition
             )
 
             animator.doOnEnd {
@@ -89,8 +95,8 @@ class SnackBarBehavior<B : ViewBinding>(
         cancelHideAfterDelay()
 
         val animator = animate(
-            from = 0f,
-            to = -snackBarView.height.toFloat()
+            from = shownPosition,
+            to = hiddenPosition
         )
 
         animator.doOnEnd { sh.state = State.Hidden }
@@ -115,8 +121,8 @@ class SnackBarBehavior<B : ViewBinding>(
             snackBarView.removeCallbacks(hideAfterDelayRunnable!!)
     }
 
-    private fun resetSnackBarPosition() {
-        snackBarView.y = -snackBarView.height.toFloat()
+    private fun resetSnackBar() {
+        snackBarView.y = hiddenPosition
         sh.state = State.Hidden
     }
 

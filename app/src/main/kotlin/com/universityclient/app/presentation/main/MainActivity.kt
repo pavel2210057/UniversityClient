@@ -13,8 +13,6 @@ import com.universityclient.app.presentation.base.activity.BaseActivity
 import com.universityclient.app.presentation.common.behavior.SnackBarBehavior
 import com.universityclient.app.presentation.common.ext.lifecycleAware
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -49,29 +47,18 @@ class MainActivity : BaseActivity() {
         snackBarBehavior.setup()
     }
 
-    var a = true
 
     private fun setupCommands() {
-        viewModel.mainCommandHolder.showToastSharedFlow
-            .onEach { message ->
-                Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        with (viewModel.sharedMainCommandHolder) {
+            showToast.bind(lifecycleScope) { message ->
+                Toast.makeText(this@MainActivity, message.data, Toast.LENGTH_SHORT)
                     .show()
             }
-            .launchIn(lifecycleScope)
-
-        with (viewModel.sharedMainCommandHolder) {
 
             showError.bind(lifecycleScope) { error ->
-                val desc = if (a)
-                    "Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc "
-                else
-                    getString(error.descRes)
-
-                a = !a
-
                 snackBarBehavior.show {
                     it.textViewTitle.text = getString(error.titleRes)
-                    it.textViewDesc.text = desc
+                    it.textViewDesc.text = getString(error.descRes)
                 }
             }
         }

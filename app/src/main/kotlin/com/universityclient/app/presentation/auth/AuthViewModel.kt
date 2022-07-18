@@ -29,7 +29,7 @@ data class AuthStateHolder(
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authInteractor: AuthInteractor,
-    private val sharedMainCommandHolder: SharedMainCommandHolder
+    private val sharedCommandHolder: SharedMainCommandHolder
 ) : FragmentViewModel() {
 
     private val _sh = AuthStateHolderFlowable(
@@ -52,7 +52,7 @@ class AuthViewModel @Inject constructor(
                 val e = result.exception()
 
                 if (e is ApiException.InvalidLoginException)
-                    sharedMainCommandHolder.showError.emit(
+                    sharedCommandHolder.showError.emit(
                         ShowError(
                             titleRes = R.string.authScreen_invalidData_error_title,
                             descRes = R.string.authScreen_invalidData_error_desc

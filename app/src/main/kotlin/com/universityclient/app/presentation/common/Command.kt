@@ -12,7 +12,9 @@ abstract class Command<C : CommandUnit> {
 
     abstract fun bind(scope: CoroutineScope, block: suspend (C) -> Unit): Job
 
-    abstract fun emit(value: C)
+    abstract suspend fun emit(value: C)
+
+    abstract fun tryEmit(value: C)
 }
 
 fun<C : CommandUnit> MutableSharedFlow<C>.asCommand() = object : Command<C>() {
@@ -21,7 +23,9 @@ fun<C : CommandUnit> MutableSharedFlow<C>.asCommand() = object : Command<C>() {
         return onEach(block).launchIn(scope)
     }
 
-    override fun emit(value: C) { tryEmit(value) }
+    override suspend fun emit(value: C) { this@asCommand.emit(value) }
+
+    override fun tryEmit(value: C) { this@asCommand.tryEmit(value) }
 }
 
-infix fun<C : CommandUnit> C.emitTo(command: Command<C>) { command.emit(this) }
+suspend infix fun<C : CommandUnit> C.emitTo(command: Command<C>) { command.emit(this) }
