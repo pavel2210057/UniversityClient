@@ -6,7 +6,6 @@ import android.view.animation.LinearInterpolator
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnEnd
 import androidx.core.view.*
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.behavior.SwipeDismissBehavior
 import kotlinx.coroutines.Runnable
@@ -15,7 +14,7 @@ class SnackBarBehavior<B : ViewBinding>(
     private val snackBarBinding: B,
     private val duration: Long = DEFAULT_DURATION,
     private val topDelay: Long = DEFAULT_TOP_DELAY
-) : DefaultLifecycleObserver {
+) {
 
     private val snackBarView: View
         get() = snackBarBinding.root
