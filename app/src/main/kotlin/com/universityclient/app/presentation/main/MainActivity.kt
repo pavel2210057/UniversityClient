@@ -11,6 +11,7 @@ import com.universityclient.app.R
 import com.universityclient.app.databinding.ActivityMainBinding
 import com.universityclient.app.presentation.base.activity.BaseActivity
 import com.universityclient.app.presentation.common.behavior.SnackBarBehavior
+import com.universityclient.app.presentation.common.ext.lifecycleAware
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,14 +28,15 @@ class MainActivity : BaseActivity() {
     private val navHostController: NavController
         get() = navHostFragment.navController
 
-    private val snackBarBehavior by lazy {
-        SnackBarBehavior(binding.root)
+    private val snackBarBehavior by lifecycleAware {
+        SnackBarBehavior(binding.layoutAlertSnackBar)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupViews()
         setupCommands()
     }
 
@@ -42,6 +44,12 @@ class MainActivity : BaseActivity() {
         val isEmptyBackStack = navHostController.previousBackStackEntry == null
         viewModel.onBackClicked(isEmptyBackStack)
     }
+
+    private fun setupViews() {
+        snackBarBehavior.setup()
+    }
+
+    var a = true
 
     private fun setupCommands() {
         viewModel.mainCommandHolder.showToastSharedFlow
@@ -51,11 +59,21 @@ class MainActivity : BaseActivity() {
             }
             .launchIn(lifecycleScope)
 
-        viewModel.showErrorCommand.bind(lifecycleScope) { error ->
-            snackBarBehavior.show(
-                getString(error.titleRes),
-                getString(error.descRes)
-            )
+        with (viewModel.sharedMainCommandHolder) {
+
+            showError.bind(lifecycleScope) { error ->
+                val desc = if (a)
+                    "Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc Long Desc "
+                else
+                    getString(error.descRes)
+
+                a = !a
+
+                snackBarBehavior.show {
+                    it.textViewTitle.text = getString(error.titleRes)
+                    it.textViewDesc.text = desc
+                }
+            }
         }
     }
 }

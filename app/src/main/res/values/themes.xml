@@ -8,6 +8,8 @@
         <item name="inactiveTabColor">@color/inactiveTabColor</item>
         <item name="activeTabColor">@color/activeTabColor</item>
 
+        <item name="android:statusBarColor">@color/primaryColor</item>
+
         <item name="screenBackground">@color/screenBackground</item>
         <item name="shimmerColor">@color/shimmerColor</item>
         <item name="shimmerEdgeColor">@color/shimmerEdgeColor</item>

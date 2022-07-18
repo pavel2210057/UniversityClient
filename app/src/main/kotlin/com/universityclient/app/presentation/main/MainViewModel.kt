@@ -2,8 +2,6 @@ package com.universityclient.app.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.universityclient.app.presentation.base.viewModel.ActivityViewModel
-import com.universityclient.app.presentation.common.Command
-import com.universityclient.app.presentation.main.command.ShowError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,7 +16,7 @@ data class MainCommandHolder(
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val showErrorCommand: Command<ShowError>
+    val sharedMainCommandHolder: SharedMainCommandHolder
 ) : ActivityViewModel() {
 
     private val _mainCommandHolder = MainCommandHolderFlowable()
