@@ -23,17 +23,17 @@ class HubFragment : BaseFragment(R.layout.fragment_hub) {
     }
 
     private fun setupViews() {
-        binding.viewPagerHub.adapter = HubPagerAdapter(this)
+        binding.viewPagerHub.apply {
+            isUserInputEnabled = false
+            adapter = HubPagerAdapter(this@HubFragment)
+        }
 
         TabBehavior(
             binding.textViewTabHome,
             binding.textViewTabChat,
             binding.textViewTabProfile
         ).apply {
-            reactOnViewPager(binding.viewPagerHub)
-            addTabChangedCallback { _, position ->
-                binding.viewPagerHub.currentItem = position
-            }
+            bindViewPager(binding.viewPagerHub)
         }
     }
 }

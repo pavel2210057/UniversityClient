@@ -9,4 +9,4 @@ suspend fun <T> SharedFlow<T>.cachedOrFirst() =
     if (replayCache.isNotEmpty())
         replayCache.first()
     else
-        first()
+        firstOrNull()

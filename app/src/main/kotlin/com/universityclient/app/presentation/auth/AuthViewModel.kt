@@ -3,9 +3,10 @@ package com.universityclient.app.presentation.auth
 import androidx.lifecycle.viewModelScope
 import com.moodle.client.result.ApiException
 import com.universityclient.app.R
-import com.universityclient.app.common.ext.exception
 import com.universityclient.app.interactor.auth.AuthInteractor
-import com.universityclient.app.interactor.common.validation.*
+import com.universityclient.app.interactor.common.DataResult
+import com.universityclient.app.interactor.common.validation.ValidationState
+import com.universityclient.app.interactor.common.validation.validateTo
 import com.universityclient.app.presentation.base.viewModel.FragmentViewModel
 import com.universityclient.app.presentation.common.UiResult
 import com.universityclient.app.presentation.main.SharedMainCommandHolder
@@ -18,12 +19,9 @@ import javax.inject.Inject
 
 @Flowable
 data class AuthStateHolder(
-    @State
-    val auth: UiResult<Unit, Exception>,
-    @State
-    val usernameValidation: ValidationState,
-    @State
-    val passwordValidation: ValidationState
+    @State val auth: UiResult<Unit>,
+    @State val usernameValidation: ValidationState,
+    @State val passwordValidation: ValidationState
 )
 
 @HiltViewModel
@@ -48,20 +46,23 @@ class AuthViewModel @Inject constructor(
                 passwordSubject = password validateTo _sh.passwordValidationStateFlow
             )
 
-            if (result.isFailure) {
-                val e = result.exception()
+            when (result) {
+                is DataResult.Success -> {
+                    AuthFragmentDirections.authToHub().navigate()
+                }
+                is DataResult.Failure -> {
+                    val e = result.cause
 
-                if (e is ApiException.InvalidLoginException)
-                    sharedCommandHolder.showError.emit(
-                        ShowError(
-                            titleRes = R.string.authScreen_invalidData_error_title,
-                            descRes = R.string.authScreen_invalidData_error_desc
+                    if (e is ApiException.InvalidLoginException)
+                        sharedCommandHolder.showError.emit(
+                            ShowError(
+                                titleRes = R.string.authScreen_invalidData_error_title,
+                                descRes = R.string.authScreen_invalidData_error_desc
+                            )
                         )
-                    )
 
-                _sh.authStateFlow.value = UiResult.failure(e)
-            } else {
-                AuthFragmentDirections.authToHub().navigate()
+                    _sh.authStateFlow.value = UiResult.failure(e)
+                }
             }
         }
     }

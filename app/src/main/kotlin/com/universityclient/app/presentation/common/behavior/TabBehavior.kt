@@ -23,11 +23,14 @@ class TabBehavior<T : View>(
         }
     }
 
-    fun reactOnViewPager(viewPager: ViewPager2) {
+    fun bindViewPager(viewPager: ViewPager2, needSmoothScroll: Boolean = false) {
         selectTab(viewPager.currentItem)
         viewPager.onPageChanged(
             onPageSelected = ::selectTab
         )
+        addTabChangedCallback { _, position ->
+            viewPager.setCurrentItem(position, needSmoothScroll)
+        }
     }
 
     fun addTabChangedCallback(callback: TabChangedCallback<T>) {

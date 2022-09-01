@@ -1,10 +1,11 @@
 package com.moodle.client.internal.component
 
 import com.moodle.client.component.TokenComponent
-import com.universityclient.domain.Token
-import com.moodle.client.internal.api.service.TokenApiService
 import com.moodle.client.internal.api.request.TokenRequest
+import com.moodle.client.internal.api.service.TokenApiService
+import com.moodle.client.internal.component.ext.transformOrFailure
 import com.moodle.client.result.ApiResult
+import com.universityclient.domain.Token
 import javax.inject.Inject
 
 internal class TokenComponentImpl @Inject constructor(
@@ -17,6 +18,6 @@ internal class TokenComponentImpl @Inject constructor(
             password = password
         )
 
-        return tokenService.getToken(request)
+        return tokenService.getToken(request).transformOrFailure()
     }
 }

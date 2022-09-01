@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@+id/end"
+        app:duration="300"
+        app:motionInterpolator="easeInOut">
+
+        <OnSwipe
+            app:touchAnchorId="@id/recyclerView_accountList"
+            app:touchAnchorSide="top"
+            app:dragDirection="dragUp"
+            app:maxVelocity="20"
+            app:maxAcceleration="10"
+            />
+
+        <KeyFrameSet>
+
+            <KeyPosition
+                app:motionTarget="@id/cardView_titleBlock"
+                app:keyPositionType="deltaRelative"
+                app:framePosition="50"
+                app:percentY="1"
+                />
+
+            <KeyPosition
+                app:motionTarget="@id/imageView_avatar"
+                app:keyPositionType="deltaRelative"
+                app:framePosition="55"
+                app:percentY="1"
+                />
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet
+        android:id="@id/start">
+
+        <Constraint
+            android:id="@+id/view_parallaxBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="235dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <CustomAttribute
+                app:attributeName="radius"
+                app:customDimension="10dp"
+                />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/cardView_titleBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="131dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <CustomAttribute
+                app:attributeName="cardElevation"
+                app:customDimension="10dp"
+                />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Constraint
+            android:id="@+id/recyclerView_accountList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView_titleBlock"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </ConstraintSet>
+
+    <ConstraintSet
+        android:id="@id/end">
+
+        <Constraint
+            android:id="@+id/view_parallaxBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <CustomAttribute
+                app:attributeName="radius"
+                app:customDimension="1dp"
+                />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/cardView_titleBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <CustomAttribute
+                app:attributeName="cardElevation"
+                app:customDimension="0dp"
+                />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Constraint
+            android:id="@+id/recyclerView_accountList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </ConstraintSet>
+</MotionScene>

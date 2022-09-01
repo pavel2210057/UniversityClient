@@ -8,12 +8,12 @@ import androidx.annotation.ColorRes
 
 @ColorRes
 fun Context.resolveColor(@AttrRes attr: Int): Int {
-    return this.theme.resolveAttribute(attr)
+    return theme.resolveAttribute(attr)
 }
 
 fun Resources.Theme.resolveAttribute(@AttrRes attr: Int): Int {
     val typedValue = TypedValue()
     if (!resolveAttribute(attr, typedValue, true))
-        error("Attribute with id $attr wasn't found")
+        error("Attribute with id $attr hasn't been found")
     return typedValue.data
 }

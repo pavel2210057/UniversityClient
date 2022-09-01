@@ -33,7 +33,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setupViews()
         setupCommands()
     }
@@ -46,7 +45,6 @@ class MainActivity : BaseActivity() {
     private fun setupViews() {
         snackBarBehavior.setup()
     }
-
 
     private fun setupCommands() {
         with (viewModel.sharedMainCommandHolder) {

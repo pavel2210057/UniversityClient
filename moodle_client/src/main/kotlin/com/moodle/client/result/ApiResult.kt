@@ -8,7 +8,7 @@ sealed class ApiResult<T> {
 
     data class Success<T>(val data: T) : ApiResult<T>()
 
-    data class Failure<T>(val throwable: Throwable) : ApiResult<T>() {
+    data class Failure<T>(val cause: Exception) : ApiResult<T>() {
 
         companion object {
             val UNKNOWN_ERROR = RuntimeException("Unknown error!")
@@ -19,6 +19,6 @@ sealed class ApiResult<T> {
 
         fun<T> success(data: T) = Success(data)
 
-        fun<T> failure(t: Throwable) = Failure<T>(t)
+        fun<T> failure(cause: Exception) = Failure<T>(cause)
     }
 }

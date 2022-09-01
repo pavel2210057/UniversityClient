@@ -1,24 +1,24 @@
 package com.universityclient.app.presentation.common
 
-sealed class UiResult<T, F> {
+sealed class UiResult<T> {
 
     fun isSuccess() = this is Success
     fun isEmpty() = this is Empty
     fun isLoading() = this is Loading
     fun isFailure() = this is Failure
 
-    data class Success<T, F>(val data: T) : UiResult<T, F>()
+    data class Success<T>(val data: T) : UiResult<T>()
 
-    class Empty<T, F> : UiResult<T, F>()
+    class Empty<T> : UiResult<T>()
 
-    class Loading<T, F> : UiResult<T, F>()
+    class Loading<T> : UiResult<T>()
 
-    data class Failure<T, F>(val cause: F) : UiResult<T, F>()
+    data class Failure<T>(val cause: Exception) : UiResult<T>()
 
     companion object {
-        fun<T, F> success(data: T) = Success<T, F>(data)
-        fun<T, F> empty() = Empty<T, F>()
-        fun<T, F> loading() = Loading<T, F>()
-        fun<T, F> failure(cause: F) = Failure<T, F>(cause)
+        fun<T> success(data: T) = Success(data)
+        fun<T> empty() = Empty<T>()
+        fun<T> loading() = Loading<T>()
+        fun<T> failure(cause: Exception) = Failure<T>(cause)
     }
 }

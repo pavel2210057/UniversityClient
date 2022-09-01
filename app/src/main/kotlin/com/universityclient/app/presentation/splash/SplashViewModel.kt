@@ -2,7 +2,6 @@ package com.universityclient.app.presentation.splash
 
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import com.universityclient.app.common.ext.executeAtLeast
 import com.universityclient.app.data.repository.TokenRepository
 import com.universityclient.app.presentation.base.viewModel.FragmentViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +16,14 @@ class SplashViewModel @Inject constructor(
 
     fun onViewCreated() {
         viewModelScope.launch {
-            val startScreenDirection = executeAtLeast(MIN_LOAD_TIME, ::defineStartScreen)
+            val timerJob = launch { delay(MIN_LOAD_TIME) }
+            val startScreenDirection = defineStartScreen()
+
+            timerJob.join()
+
             startScreenDirection.navigate()
         }
     }
-
-    private suspend fun launchMinLoadTimeDelay() = delay(MIN_LOAD_TIME)
 
     private suspend fun defineStartScreen(): NavDirections {
         val isTokenExists = tokenRepository.getTokenOrNull() != null

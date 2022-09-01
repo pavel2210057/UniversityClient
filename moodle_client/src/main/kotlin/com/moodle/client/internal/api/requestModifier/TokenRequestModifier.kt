@@ -11,7 +11,7 @@ internal class TokenRequestModifier @Inject constructor(
     override suspend fun modify(httpRequestBuilder: HttpRequestBuilder): HttpRequestBuilder {
         return httpRequestBuilder.apply {
             val token = tokenProvider.provideToken() ?: return@apply
-            parameter(TOKEN_PARAMETER_NAME, token)
+            parameter(TOKEN_PARAMETER_NAME, token.token)
         }
     }
 

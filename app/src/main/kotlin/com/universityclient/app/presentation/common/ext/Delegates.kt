@@ -31,4 +31,13 @@ class LifecycleAwareDelegate<T>(
     }
 }
 
+/**
+ * properties delegated by lifecycleAware, will be
+ * automatically cleared when the lifecycle of the
+ * lifecycle owner is Lifecycle.State.DESTROYED
+ *
+ * Note: if the current owner's state is DESTROYED,
+ *       then will be returned value from the
+ *       initialization block
+ */
 fun<T> LifecycleOwner.lifecycleAware(block: () -> T) = LifecycleAwareDelegate(this, block)

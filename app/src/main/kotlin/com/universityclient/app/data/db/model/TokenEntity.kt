@@ -2,8 +2,8 @@ package com.universityclient.app.data.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.universityclient.domain.Token
 import com.universityclient.app.data.db.constant.TableNames
+import com.universityclient.domain.Token
 
 @Entity(
     tableName = TableNames.TokenTable
@@ -15,11 +15,4 @@ data class TokenEntity(
     fun transform() = Token(
         token = token
     )
-
-    companion object {
-
-        fun from(token: Token) = TokenEntity(
-            token = token.token
-        )
-    }
 }

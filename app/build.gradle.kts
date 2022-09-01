@@ -114,6 +114,12 @@ dependencies {
     //binding
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3")
 
+    //adapter delegates
+    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
+
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.13.2")
+
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3")
@@ -133,4 +139,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     testImplementation("org.mockito:mockito-inline:3.11.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.3")
+
+    //leak canary
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
 }

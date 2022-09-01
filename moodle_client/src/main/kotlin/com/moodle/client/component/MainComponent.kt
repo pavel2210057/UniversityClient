@@ -4,5 +4,7 @@ interface MainComponent {
 
     fun tokenComponent(): TokenComponent
 
-    fun siteInfoComponent(): SiteInfoComponent
+    fun metadataComponent(): MetadataComponent
+
+    fun userComponent(): UserComponent
 }

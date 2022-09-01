@@ -1,8 +1,9 @@
 package com.universityclient.app.di
 
 import com.moodle.client.MoodleClient
-import com.moodle.client.component.SiteInfoComponent
+import com.moodle.client.component.MetadataComponent
 import com.moodle.client.component.TokenComponent
+import com.moodle.client.component.UserComponent
 import com.universityclient.app.BuildConfig
 import com.universityclient.app.common.provider.TokenProvider
 import dagger.Module
@@ -40,9 +41,16 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideMoodleSiteInfoComponent(
+    fun provideMoodleMetadataComponent(
         moodleClient: MoodleClient
-    ): SiteInfoComponent {
-        return moodleClient.mainComponent.siteInfoComponent()
+    ): MetadataComponent {
+        return moodleClient.mainComponent.metadataComponent()
+    }
+
+    @Provides
+    fun provideMoodleUserComponent(
+        moodleClient: MoodleClient
+    ): UserComponent {
+        return moodleClient.mainComponent.userComponent()
     }
 }

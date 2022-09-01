@@ -1,6 +1,7 @@
 <resources>
     <style name="Theme.UniversityClient.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorAccent">@color/accentColor</item>
 
@@ -16,5 +17,12 @@
 
         <item name="alertColor">@color/alertColor</item>
         <item name="alertTextColor">@color/alertTextColor</item>
+
+        <item name="cardColor">@drawable/bg_selectable</item>
+
+        <item name="ripple">?selectableItemBackground</item>
+        <item name="rippleBorderless">?selectableItemBackgroundBorderless</item>
+
+        <item name="pressedBackgroundColor">@color/pressedBackgroundColor</item>
     </style>
 </resources>

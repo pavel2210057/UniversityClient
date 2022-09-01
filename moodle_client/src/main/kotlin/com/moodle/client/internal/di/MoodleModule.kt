@@ -4,6 +4,7 @@ import com.moodle.client.internal.annotation.Domain
 import com.moodle.client.internal.api.requestModifier.FormatRequestModifier
 import com.moodle.client.internal.api.requestModifier.TokenRequestModifier
 import com.moodle.client.internal.api.requestModifier.interceptors
+import com.moodle.client.internal.api.service.RestService
 import com.moodle.client.internal.api.service.TokenApiService
 import dagger.Module
 import dagger.Provides
@@ -39,8 +40,12 @@ internal class MoodleModule {
     }
 
     @Provides
-    fun provideTokenService(httpClient: HttpClient): TokenApiService = TokenApiService(httpClient)
-//
-//    @Provides
-//    fun provideSiteInfoService(retrofit: Retrofit): SiteInfoService = retrofit.create()
+    fun provideTokenService(httpClient: HttpClient): TokenApiService {
+        return TokenApiService(httpClient)
+    }
+
+    @Provides
+    fun provideRestService(httpClient: HttpClient): RestService {
+        return RestService(httpClient)
+    }
 }

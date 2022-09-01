@@ -1,31 +1,41 @@
 package com.universityclient.app.interactor.auth
 
-import com.moodle.client.result.ApiResult
+import com.universityclient.app.data.repository.MetadataRepository
 import com.universityclient.app.data.repository.TokenRepository
+import com.universityclient.app.interactor.common.DataResult
 import com.universityclient.app.interactor.common.validation.ValidationError
 import com.universityclient.app.interactor.common.validation.ValidationSubject
 import com.universityclient.app.interactor.common.validation.rule.NotEmptyValidationRule
+import com.universityclient.app.interactor.common.validation.validate
 import javax.inject.Inject
 
 class AuthInteractor @Inject constructor(
     private val tokenRepository: TokenRepository,
+    private val metadataRepository: MetadataRepository,
     private val notEmptyValidationRule: NotEmptyValidationRule
 ) {
 
     suspend fun login(
         usernameSubject: ValidationSubject<String>,
         passwordSubject: ValidationSubject<String>
-    ): Result<Unit> {
+    ): DataResult<Unit> {
         val isDataCorrect = validateLoginData(usernameSubject, passwordSubject)
         if (!isDataCorrect)
-            return Result.failure(ValidationError())
+            return DataResult.failure(ValidationError())
 
         val username = usernameSubject.value
         val password = passwordSubject.value
 
         return when(val tokenResult = tokenRepository.loadToken(username, password)) {
-            is ApiResult.Success -> Result.success(Unit)
-            is ApiResult.Failure -> Result.failure(tokenResult.throwable)
+            is DataResult.Success -> loadMetadata()
+            is DataResult.Failure -> DataResult.failure(tokenResult.cause)
+        }
+    }
+
+    private suspend fun loadMetadata(): DataResult<Unit> {
+        return when (val result = metadataRepository.loadAndSaveMetadata()) {
+            is DataResult.Success -> DataResult.success(Unit)
+            is DataResult.Failure -> DataResult.failure(result.cause)
         }
     }
 

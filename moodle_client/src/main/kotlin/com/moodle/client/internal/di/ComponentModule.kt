@@ -1,9 +1,11 @@
 package com.moodle.client.internal.di
 
-import com.moodle.client.component.SiteInfoComponent
+import com.moodle.client.component.MetadataComponent
 import com.moodle.client.component.TokenComponent
-import com.moodle.client.internal.component.SiteInfoComponentImpl
+import com.moodle.client.component.UserComponent
+import com.moodle.client.internal.component.MetadataComponentImpl
 import com.moodle.client.internal.component.TokenComponentImpl
+import com.moodle.client.internal.component.UserComponentImpl
 import dagger.Binds
 import dagger.Module
 
@@ -14,5 +16,8 @@ internal interface ComponentModule {
     fun bindTokenComponent(tokenComponentImpl: TokenComponentImpl): TokenComponent
 
     @Binds
-    fun bindSiteInfoComponent(siteInfoComponentImpl: SiteInfoComponentImpl): SiteInfoComponent
+    fun bindMetadataComponent(metadataComponentImpl: MetadataComponentImpl): MetadataComponent
+
+    @Binds
+    fun bindUserComponent(userComponentImpl: UserComponentImpl): UserComponent
 }

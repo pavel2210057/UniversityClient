@@ -11,4 +11,11 @@
 
     <attr name="alertColor" format="color" />
     <attr name="alertTextColor" format="color" />
+
+    <attr name="cardColor" format="reference" />
+
+    <attr name="ripple" format="reference" />
+    <attr name="rippleBorderless" format="reference" />
+
+    <attr name="pressedBackgroundColor" format="color" />
 </resources>

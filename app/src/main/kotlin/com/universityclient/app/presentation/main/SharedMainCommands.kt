@@ -4,10 +4,10 @@ import com.universityclient.app.presentation.common.Command
 import com.universityclient.app.presentation.common.asCommand
 import com.universityclient.app.presentation.main.command.ShowError
 import com.universityclient.app.presentation.main.command.ShowToast
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import me.flowable.core.Flowable
 import me.flowable.core.Shared
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @Flowable
 data class SharedMainCommands(
@@ -15,7 +15,7 @@ data class SharedMainCommands(
     @Shared(replay = 0) val showToast: ShowToast
 )
 
-@Singleton
+@ActivityRetainedScoped
 class SharedMainCommandHolder @Inject constructor() {
     private val commands = SharedMainCommandsFlowable()
 

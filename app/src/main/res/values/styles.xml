@@ -35,6 +35,13 @@
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
     </style>
+
+    <style name="Button.Primary.Transparent">
+        <item name="android:textAppearance">@style/Text.Roboto.Normal</item>
+        <item name="android:textColor">?colorPrimaryDark</item>
+
+        <item name="android:backgroundTint">@android:color/transparent</item>
+    </style>
     
     <style name="Tab" />
     
@@ -48,7 +55,7 @@
         <item name="android:textColor">?attr/tabColor</item>
         <item name="android:textSize">13sp</item>
 
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:background">@drawable/bg_selectable_borderless</item>
 
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
