@@ -7,3 +7,8 @@ fun<F : Transformable<T>, T> ApiResult<F>.transformOrFailure(): ApiResult<T> = w
     is ApiResult.Success -> ApiResult.success(data.transform())
     is ApiResult.Failure -> ApiResult.failure(cause)
 }
+
+fun<F : List<Transformable<T>>, T> ApiResult<F>.transformListOrFailure(): ApiResult<List<T>> = when(this) {
+    is ApiResult.Success -> ApiResult.success(data.map(Transformable<T>::transform))
+    is ApiResult.Failure -> ApiResult.failure(cause)
+}

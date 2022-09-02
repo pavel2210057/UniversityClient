@@ -7,6 +7,7 @@ import com.universityclient.app.interactor.auth.AuthInteractor
 import com.universityclient.app.interactor.common.DataResult
 import com.universityclient.app.interactor.common.validation.ValidationState
 import com.universityclient.app.interactor.common.validation.validateTo
+import com.universityclient.app.interactor.metadata.MetadataInteractor
 import com.universityclient.app.presentation.base.viewModel.FragmentViewModel
 import com.universityclient.app.presentation.common.UiResult
 import com.universityclient.app.presentation.main.SharedMainCommandHolder
@@ -27,6 +28,7 @@ data class AuthStateHolder(
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authInteractor: AuthInteractor,
+    private val metadataInteractor: MetadataInteractor,
     private val sharedCommandHolder: SharedMainCommandHolder
 ) : FragmentViewModel() {
 
@@ -41,29 +43,39 @@ class AuthViewModel @Inject constructor(
     fun onAuthButtonClicked(username: String, password: String) {
         _sh.authStateFlow.value = UiResult.loading()
         viewModelScope.launch {
-            val result = authInteractor.login(
+            val loginResult = authInteractor.login(
                 usernameSubject = username validateTo _sh.usernameValidationStateFlow,
                 passwordSubject = password validateTo _sh.passwordValidationStateFlow
             )
 
-            when (result) {
-                is DataResult.Success -> {
-                    AuthFragmentDirections.authToHub().navigate()
-                }
-                is DataResult.Failure -> {
-                    val e = result.cause
-
-                    if (e is ApiException.InvalidLoginException)
-                        sharedCommandHolder.showError.emit(
-                            ShowError(
-                                titleRes = R.string.authScreen_invalidData_error_title,
-                                descRes = R.string.authScreen_invalidData_error_desc
-                            )
+            if (loginResult is DataResult.Failure) {
+                if (loginResult.cause is ApiException.InvalidLoginException)
+                    sharedCommandHolder.showError.emit(
+                        ShowError(
+                            titleRes = R.string.authScreen_invalidData_error_title,
+                            descRes = R.string.authScreen_invalidData_error_desc
                         )
+                    )
 
-                    _sh.authStateFlow.value = UiResult.failure(e)
-                }
+                _sh.authStateFlow.value = UiResult.failure(loginResult.cause)
+                return@launch
             }
+
+            val metadataResult = metadataInteractor.loadAndSaveMetadata()
+
+            if (metadataResult is DataResult.Failure) {
+                sharedCommandHolder.showError.emit(
+                    ShowError(
+                        titleRes = R.string.authScreen_invalidData_error_title,
+                        descRes = R.string.authScreen_invalidData_error_desc
+                    )
+                )
+
+                _sh.authStateFlow.value = UiResult.failure(metadataResult.cause)
+                return@launch
+            }
+
+            AuthFragmentDirections.authToHub().navigate()
         }
     }
 }

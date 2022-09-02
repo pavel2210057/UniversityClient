@@ -3,7 +3,7 @@ package com.moodle.client.internal.component
 import com.moodle.client.component.UserComponent
 import com.moodle.client.internal.api.request.UsersByFieldRequest
 import com.moodle.client.internal.api.service.RestService
-import com.moodle.client.internal.component.ext.transformOrFailure
+import com.moodle.client.internal.component.ext.transformListOrFailure
 import com.moodle.client.result.ApiResult
 import com.universityclient.domain.User
 import javax.inject.Inject
@@ -21,7 +21,7 @@ internal class UserComponentImpl @Inject constructor(
             values = values.asList()
         )
 
-        return restService.loadUsersByField(request).transformOrFailure()
+        return restService.loadUsersByField(request).transformListOrFailure()
     }
 
     override suspend fun getUserById(id: String): ApiResult<User> {

@@ -8,7 +8,9 @@ import com.universityclient.app.interactor.common.asDataResult
 import com.universityclient.domain.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -18,21 +20,25 @@ class UserRepository @Inject constructor(
     private val metadataRepository: MetadataRepository
 ) {
 
-    suspend fun getAndLoadSelfUser(): Flow<DataResult<User>> = withContext(Dispatchers.IO) {
-        flow {
-            val userId = metadataRepository.currentUserId()
+    suspend fun getCurrentUserId() = withContext(Dispatchers.IO) {
+        metadataRepository.currentUserId()
+    }
 
-            if (userId == null)
-                emit(DataResult.failure(Exception()))
-            else
-                getAndLoadUser(userId)
-        }
+    fun getAndLoadSelfUser(): Flow<DataResult<User>> = flow {
+        val userId = metadataRepository.currentUserId()
+
+        if (userId == null)
+            //TODO emit appropriate exception
+            emit(DataResult.failure(Exception()))
+        else
+            emitAll(getAndLoadUser(userId))
     }
 
     suspend fun loadSelfUser(): DataResult<User> = withContext(Dispatchers.IO) {
         val userId = metadataRepository.currentUserId()
 
         if (userId == null)
+            //TODO emit appropriate exception
             DataResult.failure(Exception())
         else
             loadUserById(userId)
@@ -47,15 +53,14 @@ class UserRepository @Inject constructor(
             getCachedUserByIdOrNull(userId)
     }
 
-    suspend fun getAndLoadUser(id: String): Flow<DataResult<User>> = withContext(Dispatchers.IO) {
-        flow {
-            val cachedUser = getCachedUserByIdOrNull(id)
-            if (cachedUser != null)
-                emit(cachedUser.asDataResult())
+    fun getAndLoadUser(id: String): Flow<DataResult<User>> = flow {
+        val cachedUser = getCachedUserByIdOrNull(id)
+        if (cachedUser != null)
+            emit(cachedUser.asDataResult())
 
-            emit(loadUserById(id))
-        }
+        emit(loadUserById(id))
     }
+        .flowOn(Dispatchers.IO)
 
     suspend fun loadUserById(id: String): DataResult<User> = withContext(Dispatchers.IO) {
         val user = userComponent.getUserById(id).asDataResult()

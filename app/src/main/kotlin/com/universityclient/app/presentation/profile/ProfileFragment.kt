@@ -44,8 +44,18 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun setupViews() {
+        binding.root.apply {
+            setOnChildScrollUpCallback { _, _ ->
+                binding.motionLayout.currentState != binding.motionLayout.startState
+            }
+
+            setOnRefreshListener {
+                viewModel.onScreenRefresh()
+            }
+        }
+
         binding.toolbar.setOnClickListener {
-            binding.root.transitionToStart()
+            binding.motionLayout.transitionToStart()
         }
 
         binding.recyclerViewAccountList.apply {
@@ -94,6 +104,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun fillUserFields(userUi: UserUi) {
+        binding.root.isRefreshing = false
+
         with(binding) {
             Glide.with(this@ProfileFragment)
                 .load(userUi.avatarUrl)

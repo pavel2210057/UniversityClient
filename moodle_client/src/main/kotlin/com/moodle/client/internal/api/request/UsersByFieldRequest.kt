@@ -9,5 +9,5 @@ import kotlinx.serialization.Serializable
 @Resource(RestUrl.REST)
 data class UsersByFieldRequest(
     @SerialName("field") val field: String,
-    @SerialName("values") val values: List<String>
+    @SerialName("values[]") val values: List<String>
 )

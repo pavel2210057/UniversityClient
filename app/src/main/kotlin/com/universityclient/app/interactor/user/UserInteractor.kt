@@ -10,7 +10,7 @@ class UserInteractor @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    suspend fun getAndLoadSelfUser(): Flow<DataResult<User>> {
+    fun getAndLoadSelfUser(): Flow<DataResult<User>> {
         return userRepository.getAndLoadSelfUser()
     }
 

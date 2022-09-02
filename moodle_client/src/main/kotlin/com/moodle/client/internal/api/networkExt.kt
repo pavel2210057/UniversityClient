@@ -23,15 +23,25 @@ internal suspend inline fun<reified T> HttpResponse.asApiResult(): ApiResult<T> 
     val json = json
     val responseText = bodyAsText()
 
-    val body = responseText.tryParse<T>(json)
+    val parseException = ExceptionWrapper()
+
+    val body = responseText.tryParse<T>(json, parseException)
     if (body != null)
         return ApiResult.success(body)
 
     val apiError = responseText.tryParseApiError(json)
     if (apiError != null)
-        return ApiResult.failure(apiError.asApiException())
+        return ApiResult.failure(
+            apiError.asApiException(
+                request, responseText, parseException.e
+            )
+        )
 
-    return ApiResult.failure(ApiResult.Failure.UNKNOWN_ERROR)
+    return ApiResult.failure(
+        ApiError.UNKNOWN_ERROR.asApiException(
+            request, responseText, parseException.e
+        )
+    )
 }
 
 private fun<T> Int.errorStatusCodeToApiResult(): ApiResult<T> {
@@ -45,17 +55,17 @@ private fun String.tryParseApiError(json: Json): ApiError? {
         ?: tryParse<LoginError>(json)
 }
 
-internal inline fun<reified T> String.tryParse(json: Json): T? {
+private inline fun<reified T> String.tryParse(json: Json, outException: ExceptionWrapper? = null): T? {
     return try {
         json.decodeFromString(this)
     } catch (e: SerializationException) {
-        System.err.println(this)
-        e.printStackTrace(System.err)
+        outException?.e = e
         null
     } catch (e: Exception) {
         //todo report to crashlytics
-        System.err.println(this)
-        e.printStackTrace(System.err)
+        outException?.e = e
         null
     }
 }
+
+internal data class ExceptionWrapper(var e: Exception? = null)

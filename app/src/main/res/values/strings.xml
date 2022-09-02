@@ -8,6 +8,7 @@
     <string name="authScreen_submit_button">Войти</string>
     <string name="authScreen_invalidData_error_title">Что-то пошло не так</string>
     <string name="authScreen_invalidData_error_desc">Неверно введен логин или пароль</string>
+    <string name="authScreen_error_desc">Ошибка загрузки данных</string>
 
     <!-- Hub Screen -->
     <string name="hubScreen_tab_home">Хаб</string>

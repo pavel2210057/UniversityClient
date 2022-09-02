@@ -7,7 +7,7 @@ import com.moodle.client.internal.api.request.UsersByFieldRequest
 import com.moodle.client.internal.api.requestModifier.MobileServiceRequestModifier
 import com.moodle.client.internal.api.requestModifier.modifyWith
 import com.moodle.client.internal.api.response.MetadataResponse
-import com.moodle.client.internal.api.response.UsersResponse
+import com.moodle.client.internal.api.response.UserResponse
 import com.moodle.client.result.ApiResult
 import io.ktor.client.*
 import io.ktor.client.plugins.resources.*
@@ -27,7 +27,7 @@ internal class RestService (
         return response.asApiResult()
     }
 
-    suspend fun loadUsersByField(usersByFieldRequest: UsersByFieldRequest): ApiResult<UsersResponse> {
+    suspend fun loadUsersByField(usersByFieldRequest: UsersByFieldRequest): ApiResult<List<UserResponse>> {
         val response = client.get(usersByFieldRequest) {
             modifyWith(MobileServiceRequestModifier) {
                 this.functionName = Functions.GET_USERS_BY_FIELD

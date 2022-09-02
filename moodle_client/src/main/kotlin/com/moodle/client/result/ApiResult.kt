@@ -8,12 +8,7 @@ sealed class ApiResult<T> {
 
     data class Success<T>(val data: T) : ApiResult<T>()
 
-    data class Failure<T>(val cause: Exception) : ApiResult<T>() {
-
-        companion object {
-            val UNKNOWN_ERROR = RuntimeException("Unknown error!")
-        }
-    }
+    data class Failure<T>(val cause: Exception) : ApiResult<T>()
 
     companion object {
 

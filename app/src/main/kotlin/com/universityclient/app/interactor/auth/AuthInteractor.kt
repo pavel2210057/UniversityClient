@@ -1,6 +1,5 @@
 package com.universityclient.app.interactor.auth
 
-import com.universityclient.app.data.repository.MetadataRepository
 import com.universityclient.app.data.repository.TokenRepository
 import com.universityclient.app.interactor.common.DataResult
 import com.universityclient.app.interactor.common.validation.ValidationError
@@ -11,7 +10,6 @@ import javax.inject.Inject
 
 class AuthInteractor @Inject constructor(
     private val tokenRepository: TokenRepository,
-    private val metadataRepository: MetadataRepository,
     private val notEmptyValidationRule: NotEmptyValidationRule
 ) {
 
@@ -27,15 +25,8 @@ class AuthInteractor @Inject constructor(
         val password = passwordSubject.value
 
         return when(val tokenResult = tokenRepository.loadToken(username, password)) {
-            is DataResult.Success -> loadMetadata()
-            is DataResult.Failure -> DataResult.failure(tokenResult.cause)
-        }
-    }
-
-    private suspend fun loadMetadata(): DataResult<Unit> {
-        return when (val result = metadataRepository.loadAndSaveMetadata()) {
             is DataResult.Success -> DataResult.success(Unit)
-            is DataResult.Failure -> DataResult.failure(result.cause)
+            is DataResult.Failure -> DataResult.failure(tokenResult.cause)
         }
     }
 

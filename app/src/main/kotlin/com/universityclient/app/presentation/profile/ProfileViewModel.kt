@@ -1,10 +1,13 @@
 package com.universityclient.app.presentation.profile
 
 import androidx.lifecycle.viewModelScope
+import com.universityclient.app.R
 import com.universityclient.app.interactor.common.DataResult
 import com.universityclient.app.interactor.user.UserInteractor
 import com.universityclient.app.presentation.base.viewModel.FragmentViewModel
 import com.universityclient.app.presentation.common.UiResult
+import com.universityclient.app.presentation.main.SharedMainCommandHolder
+import com.universityclient.app.presentation.main.command.ShowError
 import com.universityclient.app.presentation.profile.adapter.AccountListItem
 import com.universityclient.domain.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +26,8 @@ data class ProfileStateHolder(
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val userInteractor: UserInteractor
+    private val userInteractor: UserInteractor,
+    private val sharedCommandHolder: SharedMainCommandHolder
 ) : FragmentViewModel() {
 
     private val _sh = ProfileStateHolderFlowable(
@@ -35,6 +39,10 @@ class ProfileViewModel @Inject constructor(
 
     fun onScreenLoaded() {
         setupAccountItemList()
+        setupUserData()
+    }
+
+    fun onScreenRefresh() {
         loadUserData()
     }
 
@@ -44,23 +52,38 @@ class ProfileViewModel @Inject constructor(
         _sh.accountListItemsStateFlow.value = createAccountItemList()
     }
 
-    private fun loadUserData() {
+    private fun setupUserData() {
         _sh.userUiStateFlow.value = UiResult.loading()
         viewModelScope.launch {
             userInteractor.getAndLoadSelfUser()
                 .onEach { result ->
-                    when (result) {
-                        is DataResult.Success -> {
+                    when {
+                        result is DataResult.Success -> {
                             _sh.userUiStateFlow.value = UiResult.success(result.data.asUserUi())
                         }
-                        is DataResult.Failure -> {
-                            if (_sh.userUiStateFlow.value.isEmpty())
-                                //TODO handle exception with right cause
-                                _sh.userUiStateFlow.value = UiResult.failure(result.cause)
+                        result is DataResult.Failure && _sh.userUiStateFlow.value.isEmpty() -> {
+                            //TODO handle exception with right cause
+                            sharedCommandHolder.showError.emit(
+                                ShowError(
+                                    titleRes = R.string.authScreen_invalidData_error_title,
+                                    descRes = R.string.authScreen_error_desc
+                                )
+                            )
+                            _sh.userUiStateFlow.value = UiResult.failure(result.cause)
                         }
                     }
                 }
                 .collect()
+        }
+    }
+
+    private fun loadUserData() {
+        _sh.userUiStateFlow.value = UiResult.loading()
+        viewModelScope.launch {
+            _sh.userUiStateFlow.value = when (val result = userInteractor.loadSelfUser()) {
+                is DataResult.Success -> UiResult.success(result.data.asUserUi())
+                is DataResult.Failure -> UiResult.failure(result.cause)
+            }
         }
     }
 
