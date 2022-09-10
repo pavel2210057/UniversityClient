@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserResponse(
+internal data class UserResponse(
     @SerialName("id") val id: Int,
     @SerialName("username") val username: String,
     @SerialName("fullname") val fullname: String,

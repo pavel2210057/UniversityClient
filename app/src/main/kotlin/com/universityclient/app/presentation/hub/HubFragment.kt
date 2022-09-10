@@ -24,6 +24,7 @@ class HubFragment : BaseFragment(R.layout.fragment_hub) {
 
     private fun setupViews() {
         binding.viewPagerHub.apply {
+            offscreenPageLimit = 2
             isUserInputEnabled = false
             adapter = HubPagerAdapter(this@HubFragment)
         }

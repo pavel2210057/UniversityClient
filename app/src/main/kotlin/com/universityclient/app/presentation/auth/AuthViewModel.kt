@@ -8,6 +8,7 @@ import com.universityclient.app.interactor.common.DataResult
 import com.universityclient.app.interactor.common.validation.ValidationState
 import com.universityclient.app.interactor.common.validation.validateTo
 import com.universityclient.app.interactor.metadata.MetadataInteractor
+import com.universityclient.app.interactor.user.UserInteractor
 import com.universityclient.app.presentation.base.viewModel.FragmentViewModel
 import com.universityclient.app.presentation.common.UiResult
 import com.universityclient.app.presentation.main.SharedMainCommandHolder
@@ -29,6 +30,7 @@ data class AuthStateHolder(
 class AuthViewModel @Inject constructor(
     private val authInteractor: AuthInteractor,
     private val metadataInteractor: MetadataInteractor,
+    private val userInteractor: UserInteractor,
     private val sharedCommandHolder: SharedMainCommandHolder
 ) : FragmentViewModel() {
 
@@ -74,6 +76,10 @@ class AuthViewModel @Inject constructor(
                 _sh.authStateFlow.value = UiResult.failure(metadataResult.cause)
                 return@launch
             }
+
+            // load the user to push him to the database
+            // so we can pull it from cache later
+            userInteractor.loadSelfUser()
 
             AuthFragmentDirections.authToHub().navigate()
         }
