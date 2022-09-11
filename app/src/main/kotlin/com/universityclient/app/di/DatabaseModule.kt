@@ -3,6 +3,7 @@ package com.universityclient.app.di
 import android.content.Context
 import androidx.room.Room
 import com.universityclient.app.data.db.MainDatabase
+import com.universityclient.app.data.db.dao.ChatDao
 import com.universityclient.app.data.db.dao.MetadataDao
 import com.universityclient.app.data.db.dao.TokenDao
 import com.universityclient.app.data.db.dao.UserDao
@@ -48,5 +49,12 @@ class DatabaseModule {
         mainDatabase: MainDatabase
     ): UserDao {
         return mainDatabase.userDao()
+    }
+
+    @Provides
+    fun provideChatDao(
+        mainDatabase: MainDatabase
+    ): ChatDao {
+        return mainDatabase.chatDao()
     }
 }

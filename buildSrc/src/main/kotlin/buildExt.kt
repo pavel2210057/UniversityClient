@@ -8,7 +8,7 @@ fun File.findLineStartsWith(value: String) = inputStream().bufferedReader()
     .get()
 
 fun Project.localProperties(key: String): Lazy<String> = lazy {
-    file("/local.properties").findLineStartsWith(key)
+    file("local.properties").findLineStartsWith(key)
         .substringAfter('=')
 }
 

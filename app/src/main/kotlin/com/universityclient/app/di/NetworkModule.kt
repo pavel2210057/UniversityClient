@@ -1,6 +1,7 @@
 package com.universityclient.app.di
 
 import com.moodle.client.MoodleClient
+import com.moodle.client.component.ChatComponent
 import com.moodle.client.component.MetadataComponent
 import com.moodle.client.component.TokenComponent
 import com.moodle.client.component.UserComponent
@@ -52,5 +53,12 @@ class NetworkModule {
         moodleClient: MoodleClient
     ): UserComponent {
         return moodleClient.mainComponent.userComponent()
+    }
+
+    @Provides
+    fun provideMoodleChatComponent(
+        moodleClient: MoodleClient
+    ): ChatComponent {
+        return moodleClient.mainComponent.chatComponent()
     }
 }

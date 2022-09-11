@@ -3,7 +3,7 @@ package com.moodle.client.internal.api.requestModifier
 import io.ktor.client.request.*
 import javax.inject.Inject
 
-class FormatRequestModifier @Inject constructor() : RequestModifier<Unit> {
+internal class FormatRequestModifier @Inject constructor() : RequestModifier<Unit> {
 
     override suspend fun modify(httpRequestBuilder: HttpRequestBuilder): HttpRequestBuilder {
         return httpRequestBuilder.apply {
