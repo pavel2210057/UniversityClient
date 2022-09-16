@@ -2,6 +2,7 @@ package com.universityclient.app.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.universityclient.app.data.db.dao.ChatDao
 import com.universityclient.app.data.db.dao.MetadataDao
 import com.universityclient.app.data.db.dao.TokenDao
 import com.universityclient.app.data.db.dao.UserDao
@@ -25,4 +26,6 @@ abstract class MainDatabase : RoomDatabase() {
     abstract fun metadataDao(): MetadataDao
 
     abstract fun userDao(): UserDao
+
+    abstract fun chatDao(): ChatDao
 }

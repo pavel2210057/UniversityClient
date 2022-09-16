@@ -6,4 +6,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor() : FragmentViewModel() {
+
 }

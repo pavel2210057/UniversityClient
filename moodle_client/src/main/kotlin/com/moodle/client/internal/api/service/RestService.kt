@@ -3,14 +3,16 @@ package com.moodle.client.internal.api.service
 import com.moodle.client.internal.api.asApiResult
 import com.moodle.client.internal.api.constant.Functions
 import com.moodle.client.internal.api.constant.RestUrl
+import com.moodle.client.internal.api.request.ChatRequest
+import com.moodle.client.internal.api.request.ChatsRequest
 import com.moodle.client.internal.api.request.UsersByFieldRequest
 import com.moodle.client.internal.api.requestModifier.MobileServiceRequestModifier
 import com.moodle.client.internal.api.requestModifier.modifyWith
+import com.moodle.client.internal.api.response.ChatResponse
 import com.moodle.client.internal.api.response.MetadataResponse
 import com.moodle.client.internal.api.response.UserResponse
 import com.moodle.client.result.ApiResult
 import io.ktor.client.*
-import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
 
 internal class RestService (
@@ -28,9 +30,35 @@ internal class RestService (
     }
 
     suspend fun loadUsersByField(usersByFieldRequest: UsersByFieldRequest): ApiResult<List<UserResponse>> {
-        val response = client.get(usersByFieldRequest) {
+        val response = client.get(RestUrl.REST) {
+            setBody(usersByFieldRequest)
+
             modifyWith(MobileServiceRequestModifier) {
                 this.functionName = Functions.GET_USERS_BY_FIELD
+            }
+        }
+
+        return response.asApiResult()
+    }
+
+    suspend fun loadChats(chatsRequest: ChatsRequest): ApiResult<List<ChatResponse>> {
+        val response = client.get(RestUrl.REST) {
+            setBody(chatsRequest)
+
+            modifyWith(MobileServiceRequestModifier) {
+                this.functionName = Functions.GET_CHATS
+            }
+        }
+
+        return response.asApiResult()
+    }
+
+    suspend fun loadChat(chatRequest: ChatRequest): ApiResult<ChatResponse> {
+        val response = client.get(RestUrl.REST) {
+            setBody(chatRequest)
+
+            modifyWith(MobileServiceRequestModifier) {
+                this.functionName = Functions.GET_CHAT
             }
         }
 

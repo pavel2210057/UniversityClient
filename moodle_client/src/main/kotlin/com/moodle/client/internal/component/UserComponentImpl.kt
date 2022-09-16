@@ -13,11 +13,11 @@ internal class UserComponentImpl @Inject constructor(
 ) : UserComponent {
 
     override suspend fun getUsersByField(
-        field: String,
+        field: UserComponent.Field,
         vararg values: String
     ): ApiResult<List<User>> {
         val request = UsersByFieldRequest(
-            field = field,
+            field = field.value,
             values = values.asList()
         )
 
@@ -25,14 +25,9 @@ internal class UserComponentImpl @Inject constructor(
     }
 
     override suspend fun getUserById(id: String): ApiResult<User> {
-        return when (val result = getUsersByField(USER_ID_PARAMETER_NAME, id)) {
+        return when (val result = getUsersByField(UserComponent.Field.Id, id)) {
             is ApiResult.Success -> ApiResult.success(result.data.first())
             is ApiResult.Failure -> ApiResult.failure(result.cause)
         }
-    }
-
-    companion object {
-
-        private const val USER_ID_PARAMETER_NAME = "id"
     }
 }

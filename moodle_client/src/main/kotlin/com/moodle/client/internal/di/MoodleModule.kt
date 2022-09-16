@@ -12,7 +12,6 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.logging.*
-import io.ktor.client.plugins.resources.*
 
 @Module
 internal class MoodleModule {
@@ -29,7 +28,6 @@ internal class MoodleModule {
             }
 
             install(Logging)
-            install(Resources)
             install(HttpSend)
         }.apply {
             plugin(HttpSend).interceptors(

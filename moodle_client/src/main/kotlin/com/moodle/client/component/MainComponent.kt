@@ -7,4 +7,6 @@ interface MainComponent {
     fun metadataComponent(): MetadataComponent
 
     fun userComponent(): UserComponent
+
+    fun chatComponent(): ChatComponent
 }
